@@ -30,6 +30,17 @@ module weight_array (
             // Load one complete row
             for (i = 0; i < 32; i = i + 1)
                 dff[weight_row][i] <= weight_row_data[i];
+
+                /*
+                weight loading fashion:
+            
+                dff[weight_row][0]  <= weight_row_data[0];
+                dff[weight_row][1]  <= weight_row_data[1];
+                dff[weight_row][2]  <= weight_row_data[2];
+                ...
+                dff[weight_row][31] <= weight_row_data[31];
+
+                */
         end
 
     end
