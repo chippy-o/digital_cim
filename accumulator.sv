@@ -6,6 +6,7 @@ module accumulator (
 
     input  logic               acc_clear,
     input  logic               acc_en,
+    input logic acc_sub,
 
     input  logic signed [20:0] shifted_sum,
 
@@ -13,16 +14,17 @@ module accumulator (
 );
 
     always_ff @(posedge clk) begin
-        if (rst) begin
-            accumulated_result <= 21'sd0;
-        end
-        else if (acc_clear) begin
-            accumulated_result <= 21'sd0;
-        end
-        else if (acc_en) begin
-            accumulated_result <= accumulated_result + shifted_sum;
-        end
+    if (rst || acc_clear) begin
+        accumulated_result <= '0;
     end
+    else if (acc_en) begin
+        if (acc_sub)
+            accumulated_result <= accumulated_result - shifted_sum;
+        else
+            accumulated_result <= accumulated_result + shifted_sum;
+    end
+end
+
 
 endmodule
 
