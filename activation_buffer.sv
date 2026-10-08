@@ -18,15 +18,18 @@ module activation_buffer (
     // Storage: 32 activations × 8 bits
     logic [7:0] activation_store [0:31];
 
+    integer i;
+    integer j;
+
     // Store activations
     always_ff @(posedge clk) begin
         if (rst) begin
-            for (int i = 0; i < 32; i = i + 1) begin
+            for (i = 0; i < 32; i = i + 1) begin
                 activation_store[i] <= 8'd0;
             end
         end
         else if (act_we) begin
-            for (int i = 0; i < 32; i = i + 1) begin
+            for (i = 0; i < 32; i = i + 1) begin
                 activation_store[i] <= activation_data[i];
             end
         end
@@ -34,9 +37,9 @@ module activation_buffer (
 
     // Select one bit from every activation
     always_comb begin
-        for (int i = 0; i < 32; i = i + 1) begin
-            o_activation_bits[i] =
-                activation_store[i][i_bit_index];
+        for (j = 0; j < 32; j = j + 1) begin
+            o_activation_bits[j] =
+                activation_store[j][i_bit_index];
         end
     end
 
