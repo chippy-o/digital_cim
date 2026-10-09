@@ -1,8 +1,11 @@
 `timescale 1ns / 1ps
 
-module requantizer (
+module Requantization (
     input  logic signed [20:0] accumulated_result,
-    input  logic        [4:0]  shift_amount,
+    // Valid range 0 to 15. A 21-bit accumulator never needs more than ~12
+    // to reach INT8, and shifts of 22 or more would overflow the 22-bit
+    // rounding constant below.
+    input  logic        [3:0]  shift_amount,
 
     output logic signed [7:0]  quantized_output
 );
